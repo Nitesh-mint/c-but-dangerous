@@ -2,7 +2,6 @@
 *.exe
 
 # macOS / Linux binaries
-a.out
 *.out
 
 # Object files

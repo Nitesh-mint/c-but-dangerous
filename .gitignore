@@ -1,0 +1,19 @@
+# Windows binaries
+*.exe
+
+# macOS / Linux binaries
+a.out
+*.out
+
+# Object files
+*.o
+
+# Static & shared libs
+*.a
+*.so
+*.dylib
+
+# Debug / temp
+*.log
+*.tmp
+

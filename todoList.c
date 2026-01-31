@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+// why *title and not the title? *title holds the memory address of the actual
+// title which will be in another memory which can be dynamic eg: [title =
+// malloc(100)]
 struct Todo {
   int id;
   char *title; // stores the address of the first character of a string
@@ -13,31 +17,123 @@ struct todoList {
   int size;
 };
 
-void initializeTodo(void) {
-  struct todoList *todos = malloc(todos->capacity * sizeof(struct todoList));
+enum MenuChoices { ADD_TODO = 1, VIEW_TODOS, DELETE_TODO, EXIT_APP };
+
+struct todoList *createList(void) {
+  struct todoList *todos = malloc(sizeof(struct todoList));
+  if (todos == NULL)
+    return NULL;
   todos->capacity = 2;
   todos->size = 0;
   todos->items = malloc(todos->capacity * sizeof(struct Todo));
   if (todos->items == NULL) {
-    printf("Memory allocation failed \n");
-    return;
+    free(todos);
+    return NULL;
+  }
+  return todos;
+}
+
+void addTodo(struct todoList *list, char *userTitle) {
+  if (list->size == list->capacity) {
+    int newCapacity = list->capacity * 2;
+
+    struct Todo *temp = realloc(list->items, newCapacity * sizeof(struct Todo));
+
+    if (temp == NULL) {
+      printf("Failed to expand list!\n");
+      return;
+    }
+    list->items = temp;
+    list->capacity = newCapacity;
+    printf("List expanded to %d slots\n", list->capacity);
   }
 
-  todos->items[0].id = 1;
-  todos->items[0].title = malloc(6);
-  todos->items[0].isCompleted = 0;
-  todos->items[0].title[0] = 'n';
-  todos->items[0].title[1] = 'i';
-  todos->items[0].title[2] = 't';
+  int i = list->size;
+  list->items[i].id = i + 1;
+  list->items[i].isCompleted = 0;
+  list->items[i].title = strdup(userTitle);
+  list->size++;
+}
 
-  for (int i = 0; i < 1; i++) {
-    printf("The first ID: %d\n", todos->items[0].id);
-    printf("The first isCompleted: %d\n", todos->items[0].isCompleted);
-    printf("The first title: %s\n", todos->items[0].title);
+void markTodoCompleted(struct todoList *list, int index) {
+  if (list == NULL) {
+    printf("The list is empty");
+  };
+  list->items[index].isCompleted = 1;
+  printf("%s is marked completed", list->items[index].title);
+}
+
+void removeTodo(struct todoList *list, int index) {
+  if (list->items[index].id < 1) {
+    printf("The todo doesn't exist!");
+  };
+  free(list->items[index].title);
+
+  for (int i = index; i < list->size - 1; i++) {
+    list->items[i] = list->items[i + 1];
+  }
+  list->size--;
+}
+
+void printMyList(struct todoList *list) {
+  if (list == NULL) {
+    printf("The list is empty");
+  };
+  for (int i = 0; i < list->size; i++) {
+    printf("Id: %d\n", list->items[i].id);
+    printf("Title: %s\n", list->items[i].title);
+    printf("IsCompleted: %d\n", list->items[i].isCompleted);
+  };
+};
+
+void displayMenu(void) {
+  const char *options[] = {"1. Add a Todo", "2. View List", "3. Delete Todo",
+                           "4. Exit"};
+
+  printf("\n--- TODO APP MENU ---\n");
+  int numOptions = sizeof(options) / sizeof(options[0]);
+
+  for (int i = 0; i < numOptions; i++) {
+    printf("%s\n", options[i]);
   }
 }
 
+int takeInput() {
+  int number;
+  char input[100];
+  printf("Choose the input: \n");
+  while (fgets(input, sizeof(input), stdin)) {
+    if (sscanf(input, "%d", &number) == 1) {
+      return number;
+    } else {
+      printf("Invalid input. Try again: ");
+    }
+  }
+  return 0;
+}
+
 int main(void) {
-  initializeTodo();
+  // struct todoList *myTodoList = createList();
+  int userChoice = 0;
+
+  printf("=====================================\n");
+  printf(" Welcome to the TodoList in CLI \n");
+  printf("=====================================\n");
+  printf("It's a regular todo list but written in dangerous c code.\n\n");
+  printf("Good luck with the todo!\n\n");
+
+  displayMenu();
+
+  while (userChoice != EXIT_APP) {
+    displayMenu();
+    userChoice = takeInput();
+
+    // switch (userChoice) {
+    // 	case ADD_TODO:
+    // 		addTodo(myTodoList, );
+    // }
+  }
+  switch (userChoice) {}
+
   return 0;
 }

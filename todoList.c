@@ -53,6 +53,7 @@ void addTodo(struct todoList *list, char *userTitle) {
   list->items[i].isCompleted = 0;
   list->items[i].title = strdup(userTitle);
   list->size++;
+  printf("Todo added succesfully!");
 }
 
 void markTodoCompleted(struct todoList *list, int index) {
@@ -98,6 +99,13 @@ void displayMenu(void) {
   }
 }
 
+void takeTitleString(char input[], int size) {
+  fgets(input, size, stdin);
+  // Remove the newline that fgets stores
+  input[strcspn(input, "\n")] = '\0';
+}
+
+// take the user action input
 int takeInput() {
   int number;
   char input[100];
@@ -113,7 +121,7 @@ int takeInput() {
 }
 
 int main(void) {
-  // struct todoList *myTodoList = createList();
+  struct todoList *myTodoList = createList();
   int userChoice = 0;
 
   printf("=====================================\n");
@@ -127,11 +135,23 @@ int main(void) {
   while (userChoice != EXIT_APP) {
     displayMenu();
     userChoice = takeInput();
+    char todoTitle[100];
 
-    // switch (userChoice) {
-    // 	case ADD_TODO:
-    // 		addTodo(myTodoList, );
-    // }
+    switch (userChoice) {
+    case ADD_TODO: {
+      takeTitleString(todoTitle, sizeof(todoTitle));
+      addTodo(myTodoList, todoTitle);
+    }
+    case VIEW_TODOS: {
+      printMyList(myTodoList);
+    }
+    case DELETE_TODO: {
+      int indexToDelete;
+      indexToDelete = takeInput();
+      removeTodo(myTodoList, indexToDelete);
+    }
+		      case View
+    }
   }
   switch (userChoice) {}
 

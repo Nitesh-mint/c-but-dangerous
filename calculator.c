@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 
 enum calculatorOperations {
@@ -24,33 +25,45 @@ int takeMenuChoice() {
 }
 
 void showMenu() {
-  const char *options[] = {"1. ADD", "2. SUBTRACT", "3. MULTIPLY", "4. DIVIDE"};
+  const char *options[] = {"1. ADD", "2. SUBTRACT", "3. MULTIPLY", "4. DIVIDE",
+                           "5. EXIT"};
   int optionsCount = sizeof(options) / sizeof(options[0]);
   for (int i = 0; i < optionsCount; i++) {
     printf("%s \n", options[i]);
   }
 }
 
-int calculateNumbers(int firstNumber, int secondNumber, int action) {
+bool calculateNumbers(double firstNumber, double secondNumber, int action,
+                      double *result_output) {
+  if (result_output == NULL)
+    return false;
   switch (action) {
-  case 1:
-    return firstNumber + secondNumber;
+  case 1: {
+    *result_output = firstNumber + secondNumber;
+    return true;
+  }
   case 2:
-    return firstNumber - secondNumber;
+    *result_output = firstNumber - secondNumber;
+    return true;
   case 3:
-    return firstNumber * secondNumber;
+    *result_output = firstNumber * secondNumber;
+    return true;
   case 4:
-    return firstNumber / secondNumber;
+    if (secondNumber == 0) {
+      return false;
+    }
+    *result_output = firstNumber / secondNumber;
+    return true;
   default:
-    return 0;
+    return false;
   }
 }
 
-void takeNumberInput(int *a, int *b) {
+void takeNumberInput(double *a, double *b) {
   printf("Enter the first number:");
-  scanf("%d", a);
+  scanf("%lf", a);
   printf("Enter the second number:");
-  scanf("%d", b);
+  scanf("%lf", b);
 }
 
 int main(void) {
@@ -60,10 +73,10 @@ int main(void) {
     if (userChoice == 5) {
       break;
     }
-    int firstNumber = 0, secondNumber = 0, result = 0;
+    double firstNumber = 0, secondNumber = 0, result = 0;
     takeNumberInput(&firstNumber, &secondNumber);
-    result = calculateNumbers(firstNumber, secondNumber, userChoice);
-    printf("Result is : %d \n", result);
+    calculateNumbers(firstNumber, secondNumber, userChoice, &result);
+    printf("Result is : %lf \n", result);
     userChoice = 0;
   }
   return 0;

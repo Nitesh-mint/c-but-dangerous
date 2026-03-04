@@ -52,18 +52,23 @@ int isCharDelimeter(unsigned char c) {
 void tokenizeFileData(char *fileContent) {
   // char *token;
   int wordCount = 0;
+  int lineCount = 0;
   size_t length = strlen(fileContent);
   for (int i = 0; i < length; i++) {
     int isCurrentChar = isCharDelimeter(fileContent[i]);
     int isNextDelimeter = isCharDelimeter(fileContent[i + 1]);
 
+    if (fileContent[i] == '\n') {
+      lineCount++;
+    }
     if ((isCurrentChar == 0 && isNextDelimeter == 1)) {
       wordCount++;
     }
     // printf("Char: %u %c %d\n", fileContent[i], fileContent[i],
     //        isCharDelimeter(fileContent[i]));
   }
-  printf("%d", wordCount);
+  printf("Total Words: %d\n", wordCount);
+  printf("Total lines: %d", lineCount);
 }
 
 int main(void) {

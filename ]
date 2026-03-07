@@ -139,7 +139,7 @@ void HT_Destroy(struct HashTable *hashTable) {
   };
 };
 
-struct HashTable *HT_Rehash(struct HashTable *hashTable) {
+int HT_Rehash(struct HashTable *hashTable) {
   int newTableSize = get_next_prime(hashTable->size);
 
   struct HashTable *newHashTable = HT_init(newTableSize);
@@ -156,7 +156,7 @@ struct HashTable *HT_Rehash(struct HashTable *hashTable) {
 
   printf("Succesfully rehashed the table to new table");
 
-  return newHashTable;
+  return 1;
 };
 
 int HT_Get(struct HashTable *hashTable, char *key) {
@@ -210,6 +210,6 @@ int main(void) {
   HT_Delete(hashTable, "Nitesh");
   HT_Get(hashTable, "Nitesh");
   HT_Get(hashTable, "Supriya");
-  struct HashTable *newTable = HT_Rehash(hashTable);
+  HT_Rehash(hashTable);
   return 0;
 }

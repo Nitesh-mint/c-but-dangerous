@@ -150,7 +150,6 @@ int main(void) {
       indexToDelete = takeInput();
       removeTodo(myTodoList, indexToDelete);
     }
-		      case View
     }
   }
   switch (userChoice) {}

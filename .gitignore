@@ -17,3 +17,5 @@
 *.tmp
 
 build/
+
+.DS_Store

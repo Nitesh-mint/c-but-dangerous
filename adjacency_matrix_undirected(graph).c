@@ -5,21 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int **INIT_EMPTY_MATRIX(int V) {
-
-  int **matrix = malloc(V * sizeof(int *));
-
-  for (int i = 0; i < V; i++) {
-
-    matrix[i] = malloc(V * sizeof(int));
-
-    for (int j = 0; j <= V; j++) {
-      matrix[i][j] = 0;
-    }
-  }
-
-  printf("Empty matrix initialized!\n");
-  return matrix;
-}
+// I think try to implement the graph elsewhere and use it here. Define header
+// -> and use it with include
+struct Graph {
+  int *node;
+  int nodeCount;
+  int edgeCount;
+  // int directed; // implement later
+  // int weighted; // implement later
+};
 
 int main(void) { return 0; }

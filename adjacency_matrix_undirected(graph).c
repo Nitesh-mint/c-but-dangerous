@@ -1,5 +1,5 @@
 /* Implementation of graph:(undirected adjacency matrix)
- * The edges doesn't have direction so [1,2] means both [1,2] and [2,1]
+ * If edges doesn't have direction so then [1,2] means both [1,2] and [2,1]
  */
 
 #include "graph.h"
@@ -8,6 +8,8 @@
 
 int main(void) {
   struct Graph *graph = INIT_GRAPH(3);
-  printf("The Grap is created %d", graph->nodeCount);
+  // printGraph(graph);
+  addEdge(graph, 0, 1);
+  printGraph(graph);
   return 0;
 }

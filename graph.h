@@ -9,3 +9,4 @@ struct Graph {
 
 struct Graph *INIT_GRAPH(int V);
 int addEdge(struct Graph *g, int src, int dest);
+void printGraph(struct Graph *g);

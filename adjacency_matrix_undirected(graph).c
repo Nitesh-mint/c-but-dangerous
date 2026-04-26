@@ -11,5 +11,7 @@ int main(void) {
   // printGraph(graph);
   addEdge(graph, 0, 1);
   printGraph(graph);
+  destroyGraph(graph);
+  // printGraph(graph);
   return 0;
 }

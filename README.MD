@@ -21,4 +21,5 @@
 10. **Permission Manager** - Bitwise permission handling.
 11. **Structure Persistence** - Saving and loading structs from files.
 12. **Team Manager** - Dynamic management of teams and players.
+13. **Graph (Adjacency Matrix)** - Undirected graph implementation using a flattened contiguous array for optimal cache performance and manual memory management.
 
